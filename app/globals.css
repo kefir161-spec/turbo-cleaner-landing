@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces — cinematic industrial graphite */
+  --color-ink: #0a0b0d;
+  --color-ink-2: #0f1114;
+  --color-surface: #14171b;
+  --color-surface-2: #1b1f24;
+  --color-line: #272c33;
+  --color-line-soft: #1e2329;
+
+  /* Text */
+  --color-fg: #eef1f4;
+  --color-fg-muted: #9aa3ad;
+  --color-fg-faint: #6b747d;
+
+  /* Single signal accent — amber */
+  --color-accent: #ff7a1a;
+  --color-accent-bright: #ff9442;
+  --color-accent-dim: #b8560f;
+
+  /* Cool technical tint (used sparingly for data) */
+  --color-steel: #7fb6c9;
+
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* Fluid type scale */
+  --text-mega: clamp(2.75rem, 1.2rem + 6.6vw, 6.5rem);
+  --text-mega--line-height: 0.95;
+  --text-mega--letter-spacing: -0.02em;
+  --text-h1: clamp(2.1rem, 1.3rem + 3.6vw, 4.25rem);
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: clamp(1.7rem, 1.2rem + 2.2vw, 2.9rem);
+  --text-h2--line-height: 1.06;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: clamp(1.2rem, 1rem + 0.9vw, 1.55rem);
+  --text-h3--line-height: 1.2;
+  --text-lead: clamp(1.05rem, 0.97rem + 0.45vw, 1.3rem);
+  --text-lead--line-height: 1.5;
+
+  --radius-card: 18px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: #1a0e03;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-bright);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  /* Anchor offset for the fixed header */
+  section[id] {
+    scroll-margin-top: 84px;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.1rem, 4vw, 3rem);
+  }
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+  }
+  .hairline {
+    border-top: 1px solid var(--color-line);
+  }
+  .grain {
+    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
+    background-size: 4px 4px;
+  }
+}
+
+/* Radix Accordion — быстрая, плавная анимация раскрытия */
+@keyframes acc-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes acc-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+.acc-content {
+  overflow: hidden;
+}
+.acc-content[data-state="open"] {
+  animation: acc-down 220ms ease-out;
+}
+.acc-content[data-state="closed"] {
+  animation: acc-up 180ms ease-in;
+}
+
+/* Respect reduced motion: neutralise transforms, keep content visible */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
