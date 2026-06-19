@@ -27,13 +27,7 @@ const imageJobs = [
   ["Озон фото для/Usage.jpg", "product/cutaway.webp", 900, false],
   ["sources/scenes/studio-filters-en.png", "scenes/studio-filters-en.webp", 1600, false],
   ["sources/scenes/road-construction-en.png", "scenes/road-construction-en.webp", 1280, false],
-  ["Turbo Cleaner Яндекс/Turbo Cleaner продувка фильтра 11.png", "scenes/field-kit.webp", 1600, false],
-  ["Turbo Cleaner Яндекс/Turbo Cleaner продувка фильтра воздушного 12.png", "scenes/blow-through.webp", 1600, false],
-  ["Turbo Cleaner Яндекс/Turbo Cleaner восстановление фильтра 15.png", "scenes/restore.webp", 1600, false],
-  ["Turbo Cleaner Яндекс/Turbo Cleaner очистка в поле 20.jpg", "scenes/filter-dust.webp", 1280, false],
-  ["Turbo Cleaner Яндекс/Turbo Cleaner удаление пыли 18.jpg", "scenes/dust-cloud.webp", 1280, false],
   ["Turbo Cleaner Яндекс/Turbo Cleaner забился фильтр воздушный трактора 40.jpg", "scenes/operator.webp", 1280, false],
-  ["Turbo Cleaner Яндекс/Turbo Cleaner очистка фильтров для карьеров 32.jpg", "scenes/hands-rotor.webp", 1280, false],
   ["Turbo Cleaner Яндекс/Turbo Cleaner фильтр Акрос 21.jpg", "scenes/field-clean.webp", 900, false],
 ];
 
