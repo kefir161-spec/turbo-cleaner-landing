@@ -1,4 +1,4 @@
-import type { CompatStepId, CompatResult } from "@/content/product";
+import type { CompatStepId, CompatResult } from "@/content/types";
 
 export type Selections = Partial<Record<CompatStepId, string>>;
 

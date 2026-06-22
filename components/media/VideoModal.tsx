@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
+import { useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
 
 interface VideoModalProps {
@@ -24,6 +25,7 @@ export function VideoModal({
   orientation = "landscape",
   children,
 }: VideoModalProps) {
+  const { closeVideo } = useUi();
   const [open, setOpen] = useState(false);
 
   return (
@@ -42,7 +44,7 @@ export function VideoModal({
             <Dialog.Close asChild>
               <button
                 type="button"
-                aria-label="Закрыть видео"
+                aria-label={closeVideo}
                 className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-fg hover:bg-surface-2"
               >
                 <X className="size-4" aria-hidden />

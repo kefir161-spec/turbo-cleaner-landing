@@ -1,18 +1,12 @@
-import { Info } from "lucide-react";
-import { disclaimer } from "@/content/product";
-import { cn } from "@/lib/utils";
+"use client";
 
-/** Обязательное примечание о продувке и повторном использовании элемента. */
+import { cn } from "@/lib/utils";
+import { useProduct } from "@/lib/content-context";
+
 export function DisclaimerNote({ className }: { className?: string }) {
+  const { disclaimer } = useProduct();
+
   return (
-    <aside
-      className={cn(
-        "flex gap-3 rounded-2xl border border-line bg-surface/50 p-4 sm:p-5",
-        className,
-      )}
-    >
-      <Info className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden />
-      <p className="text-sm leading-relaxed text-fg-muted">{disclaimer}</p>
-    </aside>
+    <p className={cn("text-xs leading-relaxed text-fg-faint", className)}>{disclaimer}</p>
   );
 }

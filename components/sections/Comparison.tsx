@@ -1,22 +1,26 @@
+"use client";
+
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
-import { comparison } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 
 export function Comparison() {
+  const { comparison } = useProduct();
+  const { sectionComparison, approachA, approachB } = useUi();
+
   return (
     <Section id="comparison">
       <SectionHeading
         eyebrow={comparison.eyebrow}
         title={comparison.title}
         intro={comparison.note}
-        index="07 / Сравнение"
+        index={sectionComparison}
       />
 
       <Reveal stagger className="mt-12 grid gap-4 md:grid-cols-2">
-        {/* Обычная трубка */}
         <article className="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-8">
-          <span className="mono-label">Подход А</span>
+          <span className="mono-label">{approachA}</span>
           <h3 className="mt-2 text-h3 font-bold text-fg">{comparison.manual.title}</h3>
           <ul className="mt-5 flex flex-col gap-3">
             {comparison.manual.points.map((p) => (
@@ -28,9 +32,8 @@ export function Comparison() {
           </ul>
         </article>
 
-        {/* Turbo Cleaner */}
         <article className="rounded-[var(--radius-card)] border border-accent/40 bg-[linear-gradient(180deg,rgba(255,122,26,0.07),transparent_60%)] p-6 sm:p-8">
-          <span className="mono-label text-accent">Подход Б</span>
+          <span className="mono-label text-accent">{approachB}</span>
           <h3 className="mt-2 text-h3 font-bold text-fg">{comparison.turbo.title}</h3>
           <ul className="mt-5 flex flex-col gap-3">
             {comparison.turbo.points.map((p) => (

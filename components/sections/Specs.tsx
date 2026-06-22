@@ -1,12 +1,17 @@
+"use client";
+
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
-import { specs } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 
 export function Specs() {
+  const { specs } = useProduct();
+  const { sectionSpecs } = useUi();
+
   return (
     <Section id="specs" className="bg-ink-2">
-      <SectionHeading eyebrow={specs.eyebrow} title={specs.title} index="03 / Параметры" />
+      <SectionHeading eyebrow={specs.eyebrow} title={specs.title} index={sectionSpecs} />
 
       <Reveal
         stagger

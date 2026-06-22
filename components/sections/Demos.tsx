@@ -6,16 +6,17 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { VideoModal } from "@/components/media/VideoModal";
-import { demos, type DemoClip } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
+import type { DemoClip } from "@/content/types";
 import { cn } from "@/lib/utils";
 
-function DemoCard({ clip }: { clip: DemoClip }) {
+function DemoCard({ clip, watchLabel }: { clip: DemoClip; watchLabel: string }) {
   const portrait = clip.orientation === "portrait";
   return (
     <VideoModal src={clip.src} poster={clip.poster} caption={clip.caption} orientation={clip.orientation}>
       <button
         type="button"
-        aria-label={`Смотреть: ${clip.caption}`}
+        aria-label={`${watchLabel}: ${clip.caption}`}
         className={cn(
           "group relative w-full overflow-hidden rounded-[var(--radius-card)] border border-line text-left",
           portrait ? "aspect-[9/16]" : "aspect-video",
@@ -44,6 +45,8 @@ function DemoCard({ clip }: { clip: DemoClip }) {
 }
 
 export function Demos() {
+  const { demos } = useProduct();
+  const { sectionDemos, watchVideo } = useUi();
   const landscape = demos.items.filter((c) => c.orientation === "landscape");
   const portrait = demos.items.filter((c) => c.orientation === "portrait");
 
@@ -53,18 +56,18 @@ export function Demos() {
         eyebrow={demos.eyebrow}
         title={demos.title}
         intro={demos.intro}
-        index="08 / Видео"
+        index={sectionDemos}
       />
 
       <Reveal stagger className="mt-12 grid gap-4 sm:grid-cols-2">
         {landscape.map((clip) => (
-          <DemoCard key={clip.id} clip={clip} />
+          <DemoCard key={clip.id} clip={clip} watchLabel={watchVideo} />
         ))}
       </Reveal>
 
       <Reveal stagger className="mx-auto mt-4 grid max-w-md grid-cols-2 gap-4">
         {portrait.map((clip) => (
-          <DemoCard key={clip.id} clip={clip} />
+          <DemoCard key={clip.id} clip={clip} watchLabel={watchVideo} />
         ))}
       </Reveal>
     </Section>

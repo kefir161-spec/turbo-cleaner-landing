@@ -4,11 +4,11 @@ import { useState } from "react";
 import { ArrowUpRight, Check, CircleHelp, RotateCcw, TriangleAlert, XCircle } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { compatibility, compatResults, type CompatResult } from "@/content/product";
 import { evaluate, type Selections } from "@/lib/compatibility";
 import { ContactModal } from "@/components/ui/ContactModal";
-import { contactForm } from "@/content/brand";
+import { useBrand, useProduct, useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
+import type { CompatResult } from "@/content/types";
 
 const resultStyles: Record<
   CompatResult["tone"],
@@ -21,6 +21,9 @@ const resultStyles: Record<
 };
 
 export function Compatibility() {
+  const { compatibility, compatResults } = useProduct();
+  const { contactForm } = useBrand();
+  const ui = useUi();
   const [sel, setSel] = useState<Selections>({});
   const tone = evaluate(sel);
   const result = tone ? compatResults[tone] : null;
@@ -31,17 +34,20 @@ export function Compatibility() {
   const answered = Object.keys(sel).length;
   const ResultIcon = result ? resultStyles[result.tone].icon : null;
 
+  const answeredText = ui.compatibilityAnswered
+    .replace("{answered}", String(answered))
+    .replace("{total}", String(compatibility.steps.length));
+
   return (
     <Section id="compatibility">
       <SectionHeading
         eyebrow={compatibility.eyebrow}
         title={compatibility.title}
         intro={compatibility.intro}
-        index="04 / Совместимость"
+        index={ui.sectionCompatibility}
       />
 
       <div className="mt-12 grid gap-6 lg:grid-cols-[1.3fr_0.7fr] lg:items-start">
-        {/* Шаги */}
         <div className="flex flex-col gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line">
           {compatibility.steps.map((step, i) => (
             <fieldset key={step.id} className="bg-surface p-5 sm:p-6">
@@ -79,7 +85,6 @@ export function Compatibility() {
           ))}
         </div>
 
-        {/* Результат */}
         <div className="lg:sticky lg:top-24">
           <div
             className={cn(
@@ -112,15 +117,14 @@ export function Compatibility() {
                   className="mt-4 inline-flex items-center gap-1.5 text-sm text-fg-faint hover:text-fg"
                 >
                   <RotateCcw className="size-3.5" aria-hidden />
-                  Сбросить
+                  {ui.compatibilityReset}
                 </button>
               </>
             ) : (
               <>
-                <span className="mono-label text-fg-faint">Результат</span>
+                <span className="mono-label text-fg-faint">{ui.compatibilityResult}</span>
                 <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                  Ответьте на четыре вопроса — покажем предварительный ориентир по
-                  совместимости. Отвечено: {answered} из {compatibility.steps.length}.
+                  {ui.compatibilityPlaceholder} {answeredText}
                 </p>
               </>
             )}

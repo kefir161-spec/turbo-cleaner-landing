@@ -1,10 +1,16 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { ContactModal } from "@/components/ui/ContactModal";
-import { navLinks } from "@/content/product";
-import { brand, contactForm } from "@/content/brand";
+import { useBrand, useProduct, useUi } from "@/lib/content-context";
+import { brand } from "@/content/brand";
 
 export function Footer() {
+  const { navLinks } = useProduct();
+  const { contactForm } = useBrand();
+  const ui = useUi();
+
   return (
     <footer className="border-t border-line bg-ink-2">
       <div className="container-page flex flex-col gap-10 py-12 sm:py-16">
@@ -12,12 +18,11 @@ export function Footer() {
           <div className="max-w-sm">
             <Logo withDescriptor />
             <p className="mt-4 text-sm text-fg-faint">
-              {brand.product} — система контролируемой продувки цилиндрических
-              воздушных фильтров техники, работающей в запылённых условиях.
+              {brand.product} {ui.footerTagline}
             </p>
           </div>
 
-          <nav aria-label="Навигация в подвале" className="flex flex-col gap-3">
+          <nav aria-label={ui.footerNavAriaLabel} className="flex flex-col gap-3">
             {navLinks.map((l) => (
               <a
                 key={l.href}
@@ -41,9 +46,9 @@ export function Footer() {
 
         <div className="hairline flex flex-col gap-2 pt-6 text-xs text-fg-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {brand.year} {brand.companyFull}. {brand.product} — наименование продукта.
+            © {brand.year} {brand.companyFull}. {brand.product} {ui.footerCopyright}
           </p>
-          <p className="font-mono tracking-wide">industrial air tools</p>
+          <p className="font-mono tracking-wide">{brand.descriptor}</p>
         </div>
       </div>
     </footer>

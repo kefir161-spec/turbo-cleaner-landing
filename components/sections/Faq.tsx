@@ -5,14 +5,17 @@ import { Plus } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
-import { faq } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 
 export function Faq() {
+  const { faq } = useProduct();
+  const { sectionFaq } = useUi();
+
   return (
     <Section id="faq">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div className="lg:sticky lg:top-24">
-          <SectionHeading eyebrow={faq.eyebrow} title={faq.title} index="09 / Вопросы" />
+          <SectionHeading eyebrow={faq.eyebrow} title={faq.title} index={sectionFaq} />
         </div>
 
         <Reveal>

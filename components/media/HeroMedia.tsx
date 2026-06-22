@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { Pause, Play } from "lucide-react";
 import { media } from "@/lib/assets";
 import { useEnhancedMotion } from "@/lib/motion";
+import { useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
 
 /**
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
  * (иначе браузер не успевает переключиться на следующий <source>).
  */
 export function HeroMedia() {
+  const { playBgVideo, pauseBgVideo } = useUi();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mounted, setMounted] = useState(false);
   const motionEnabled = useEnhancedMotion();
@@ -140,7 +142,7 @@ export function HeroMedia() {
         <button
           type="button"
           onClick={togglePlay}
-          aria-label={paused ? "Воспроизвести фоновое видео" : "Остановить фоновое видео"}
+          aria-label={paused ? playBgVideo : pauseBgVideo}
           className={cn(
             "absolute bottom-5 right-5 z-10 inline-flex size-11 items-center justify-center",
             "rounded-full border border-line bg-ink/60 text-fg backdrop-blur-md transition-colors hover:bg-surface-2",

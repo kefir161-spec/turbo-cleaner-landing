@@ -1,14 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
-import { scenarios } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
 
 export function Scenarios() {
+  const { scenarios } = useProduct();
+  const { sectionScenarios } = useUi();
+
   return (
     <Section id="scenarios">
-      <SectionHeading eyebrow={scenarios.eyebrow} title={scenarios.title} index="05 / Применение" />
+      <SectionHeading eyebrow={scenarios.eyebrow} title={scenarios.title} index={sectionScenarios} />
 
       <Reveal stagger className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {scenarios.items.map((item) => (

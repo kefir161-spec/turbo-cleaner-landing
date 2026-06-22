@@ -1,17 +1,22 @@
+"use client";
+
 import { ArrowUpRight, MoveDown } from "lucide-react";
 import { HeroMedia } from "@/components/media/HeroMedia";
 import { DustCanvas } from "@/components/motion/DustCanvas";
 import { Reveal } from "@/components/motion/Reveal";
 import { LinkButton, Button } from "@/components/ui/Button";
 import { ContactModal } from "@/components/ui/ContactModal";
-import { hero } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 
 export function Hero() {
+  const { hero } = useProduct();
+  const { heroAriaLabel, scrollDown } = useUi();
+
   return (
     <section
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-12 pt-28 sm:pb-16"
-      aria-label="Turbo Cleaner — система продувки воздушных фильтров"
+      aria-label={heroAriaLabel}
     >
       <HeroMedia />
       <DustCanvas className="opacity-70" density={40} />
@@ -46,7 +51,7 @@ export function Hero() {
 
         <div className="mt-12 flex items-center gap-3 text-fg-faint">
           <MoveDown className="size-4 animate-bounce" aria-hidden />
-          <span className="mono-label">Листайте вниз</span>
+          <span className="mono-label">{scrollDown}</span>
         </div>
       </div>
     </section>

@@ -1,11 +1,12 @@
+import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
+
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   images: {
-    // Все материалы локальные и уже оптимизированы; раздаём современные форматы.
     formats: ["image/avif", "image/webp"],
   },
-  // Усиленные заголовки безопасности (Best Practices).
   async headers() {
     return [
       {
@@ -13,11 +14,10 @@ const nextConfig: NextConfig = {
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
         ],
       },
     ];
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

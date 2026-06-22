@@ -4,7 +4,7 @@ import { type FormEvent, type ReactNode } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { contactForm } from "@/content/brand";
+import { useBrand, useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
 
 const fieldClass =
@@ -14,10 +14,10 @@ interface ContactModalProps {
   children: ReactNode;
 }
 
-/**
- * Модальная форма обратной связи. Отправка — заглушка (без бэкенда).
- */
 export function ContactModal({ children }: ContactModalProps) {
+  const { contactForm } = useBrand();
+  const { closeForm } = useUi();
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
@@ -46,7 +46,7 @@ export function ContactModal({ children }: ContactModalProps) {
             <Dialog.Close asChild>
               <button
                 type="button"
-                aria-label="Закрыть форму"
+                aria-label={closeForm}
                 className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-line text-fg hover:bg-surface-2"
               >
                 <X className="size-4" aria-hidden />

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
@@ -6,10 +8,13 @@ import { LinkButton, Button } from "@/components/ui/Button";
 import { ContactModal } from "@/components/ui/ContactModal";
 import { DisclaimerNote } from "@/components/ui/DisclaimerNote";
 import { DustCanvas } from "@/components/motion/DustCanvas";
-import { finalOffer } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 import { media } from "@/lib/assets";
 
 export function FinalOffer() {
+  const { finalOffer } = useProduct();
+  const { finalOfferAlt } = useUi();
+
   return (
     <Section
       id="final"
@@ -51,7 +56,7 @@ export function FinalOffer() {
         <Reveal className="relative aspect-[1600/938] overflow-hidden rounded-[var(--radius-card)] border border-line bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.07),transparent_70%)]">
           <Image
             src={media.kitFull}
-            alt="Полный комплект Turbo Cleaner: роторы, конусный ограничитель, пневмопистолет, штанга и упаковка"
+            alt={finalOfferAlt}
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-contain p-6"

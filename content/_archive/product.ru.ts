@@ -62,7 +62,7 @@ export const howItWorks = {
       callout: "Источник: ресивер от 100 л, 8 атм.",
       image: asset("product/pneumatic-gun.webp"),
       alt: "Пневмопистолет Turbo Cleaner с быстросъёмным штуцером для подключения к компрессору",
-      imageClass: "object-cover object-[90%_center]",
+      imageClass: "object-contain object-center p-6",
     },
     {
       n: "02",

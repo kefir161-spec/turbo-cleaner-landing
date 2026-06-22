@@ -8,12 +8,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VideoModal } from "@/components/media/VideoModal";
 import { DustCanvas } from "@/components/motion/DustCanvas";
 import { gsap, registerGsap, useGSAP } from "@/lib/motion";
-import { howItWorks, demos } from "@/content/product";
+import { useProduct, useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
 
 const DOT_TOP = ["14%", "46%", "78%"];
 
 export function HowItWorks() {
+  const { howItWorks, demos } = useProduct();
+  const { sectionHowItWorks, howItWorksVideo } = useUi();
   const [active, setActive] = useState(0);
   const scopeRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -43,11 +45,10 @@ export function HowItWorks() {
         eyebrow={howItWorks.eyebrow}
         title={howItWorks.title}
         intro={howItWorks.intro}
-        index="02 / Принцип"
+        index={sectionHowItWorks}
       />
 
       <div ref={scopeRef} className="mt-12 grid gap-8 lg:grid-cols-2 lg:gap-14">
-        {/* Визуальная панель */}
         <div className="lg:sticky lg:top-[12vh] lg:h-[76vh]">
           <div className="relative h-[52vh] overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-2 lg:h-full">
             {howItWorks.steps.map((step, i) => (
@@ -67,7 +68,6 @@ export function HowItWorks() {
             ))}
             <DustCanvas className="opacity-50" density={28} />
 
-            {/* Прогресс-рейка этапов */}
             <div className="absolute left-4 top-4 bottom-4 flex w-1 flex-col rounded-full bg-line">
               <div
                 className="w-full rounded-full bg-accent transition-[height] duration-500 ease-out"
@@ -75,14 +75,12 @@ export function HowItWorks() {
               />
             </div>
 
-            {/* Индикатор положения рабочей части */}
             <div
               aria-hidden
               className="absolute right-6 size-3 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_18px_4px_rgba(255,122,26,0.5)] transition-[top] duration-500 ease-out"
               style={{ top: DOT_TOP[active] }}
             />
 
-            {/* Активный callout */}
             <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 rounded-xl border border-line bg-ink/70 px-4 py-3 backdrop-blur-md">
               <span className="font-mono text-xs tracking-wide text-accent">
                 {howItWorks.steps[active].callout}
@@ -98,14 +96,13 @@ export function HowItWorks() {
                   className="inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-xs font-semibold text-[#1a0e03]"
                 >
                   <Play className="size-3.5" aria-hidden />
-                  Видео
+                  {howItWorksVideo}
                 </button>
               </VideoModal>
             </div>
           </div>
         </div>
 
-        {/* Этапы */}
         <ol className="flex flex-col">
           {howItWorks.steps.map((step, i) => (
             <li

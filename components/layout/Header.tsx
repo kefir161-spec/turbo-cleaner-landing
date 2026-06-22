@@ -6,13 +6,16 @@ import { Menu, X, ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { ContactModal } from "@/components/ui/ContactModal";
-import { navLinks } from "@/content/product";
-import { contactForm } from "@/content/brand";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { useBrand, useProduct, useUi } from "@/lib/content-context";
 import { cn } from "@/lib/utils";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { navLinks } = useProduct();
+  const { contactForm } = useBrand();
+  const ui = useUi();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,11 +34,11 @@ export function Header() {
       )}
     >
       <div className="container-page flex h-16 items-center justify-between gap-4 sm:h-[72px]">
-        <a href="#top" className="rounded-md" aria-label="AERIX — наверх">
+        <a href="#top" className="rounded-md" aria-label={ui.logoAriaLabel}>
           <Logo />
         </a>
 
-        <nav aria-label="Основная навигация" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label={ui.mainNavAriaLabel} className="hidden items-center gap-1 lg:flex">
           {navLinks.map((l) => (
             <a
               key={l.href}
@@ -48,7 +51,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <span className="hidden sm:block">
+          <LanguageSwitcher className="hidden sm:inline-flex" />
+
+          <span className="hidden md:block">
             <ContactModal>
               <Button size="md">
                 {contactForm.triggerLabel}
@@ -61,7 +66,7 @@ export function Header() {
             <Dialog.Trigger asChild>
               <button
                 type="button"
-                aria-label="Открыть меню"
+                aria-label={ui.openMenu}
                 className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface/60 text-fg lg:hidden"
               >
                 <Menu className="size-5" aria-hidden />
@@ -75,19 +80,22 @@ export function Header() {
                     <Logo />
                   </Dialog.Title>
                   <Dialog.Description className="sr-only">
-                    Навигация по разделам страницы
+                    {ui.mobileNavTitle}
                   </Dialog.Description>
                   <Dialog.Close asChild>
                     <button
                       type="button"
-                      aria-label="Закрыть меню"
+                      aria-label={ui.closeMenu}
                       className="inline-flex size-11 items-center justify-center rounded-full border border-line text-fg"
                     >
                       <X className="size-5" aria-hidden />
                     </button>
                   </Dialog.Close>
                 </div>
-                <nav aria-label="Мобильная навигация" className="mt-4 flex flex-col">
+                <div className="mt-4">
+                  <LanguageSwitcher className="w-full [&_select]:w-full" />
+                </div>
+                <nav aria-label={ui.mobileNavAriaLabel} className="mt-4 flex flex-col">
                   {navLinks.map((l) => (
                     <a
                       key={l.href}
